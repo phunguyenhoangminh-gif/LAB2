@@ -52,13 +52,14 @@ static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 void updateClockBuffer(void);
+void update7SEG(int index);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 const int MAX_LED = 4;
 int index_led = 0;
-int led_buffer[4] = {1, 2, 3, 4};
+int led_buffer[4] = {0, 0, 0, 0};
 
 int hour = 0, minute = 0, second = 0;
 /* USER CODE END 0 */
@@ -99,10 +100,12 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   hour = 15; minute = 8; second = 50;
+  updateClockBuffer();
 
   setTimer0(100); // LED Blinky
   setTimer1(100); // DOT
   setTimer2(100); // UPDATE TIME
+  setTimer3(25);  // UPDATE 7SEG
   while (1)
   {
 	  if (timer0_flag == 1) {
@@ -130,6 +133,15 @@ int main(void)
 		  }
 		  updateClockBuffer();
 		  setTimer2(100);
+	  }
+
+	  if (timer3_flag == 1) {
+		  update7SEG(index_led);
+		  index_led++;
+		  if (index_led >= MAX_LED) {
+			  index_led = 0;
+		  }
+		  setTimer3(25);
 	  }
     /* USER CODE END WHILE */
 
@@ -398,21 +410,9 @@ void updateClockBuffer() {
     led_buffer[3] = minute % 10;
 }
 
-int seg_counter = 25;
-
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	timerRun();
-
-	seg_counter--;
-	if(seg_counter <= 0) {
-		seg_counter = 25;
-		update7SEG(index_led);
-		index_led++;
-		if(index_led >= MAX_LED) {
-			index_led = 0;
-		}
-	}
 }
 /* USER CODE END 4 */
 
