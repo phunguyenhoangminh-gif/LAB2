@@ -101,6 +101,7 @@ int main(void)
   hour = 15;
   minute = 8;
   second = 50;
+  updateClockBuffer();
   while (1)
   {
 	  second++;
