@@ -80,7 +80,7 @@ Disassembly of section .text:
 
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
-uint8_t matrix_buffer[8] = {0x66, 0x66, 0x7E, 0x7E, 0x66, 0x66, 0x3C, 0x18};
+uint8_t matrix_buffer[8] = {0x18, 0x3C, 0x66, 0x66, 0x7E, 0x7E, 0x66, 0x66};
 
 void rotateLeftMatrix() {
  800014c:	b480      	push	{r7}
@@ -90,14 +90,14 @@ void rotateLeftMatrix() {
  8000152:	2300      	movs	r3, #0
  8000154:	607b      	str	r3, [r7, #4]
  8000156:	e024      	b.n	80001a2 <rotateLeftMatrix+0x56>
-        uint8_t lsb = matrix_buffer[i] & 0x01;   // lấy bit thấp nhất
+        uint8_t lsb = matrix_buffer[i] & 0x01;
  8000158:	4a17      	ldr	r2, [pc, #92]	; (80001b8 <rotateLeftMatrix+0x6c>)
  800015a:	687b      	ldr	r3, [r7, #4]
  800015c:	4413      	add	r3, r2
  800015e:	781b      	ldrb	r3, [r3, #0]
  8000160:	f003 0301 	and.w	r3, r3, #1
  8000164:	70fb      	strb	r3, [r7, #3]
-        matrix_buffer[i] >>= 1;                  // dịch phải
+        matrix_buffer[i] >>= 1;
  8000166:	4a14      	ldr	r2, [pc, #80]	; (80001b8 <rotateLeftMatrix+0x6c>)
  8000168:	687b      	ldr	r3, [r7, #4]
  800016a:	4413      	add	r3, r2
@@ -109,7 +109,7 @@ void rotateLeftMatrix() {
  8000176:	4413      	add	r3, r2
  8000178:	460a      	mov	r2, r1
  800017a:	701a      	strb	r2, [r3, #0]
-        matrix_buffer[i] |= (lsb << 7);          // đưa bit thấp nhất lên MSB
+        matrix_buffer[i] |= (lsb << 7);
  800017c:	4a0e      	ldr	r2, [pc, #56]	; (80001b8 <rotateLeftMatrix+0x6c>)
  800017e:	687b      	ldr	r3, [r7, #4]
  8000180:	4413      	add	r3, r2

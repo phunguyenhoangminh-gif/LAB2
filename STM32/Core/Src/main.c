@@ -79,13 +79,13 @@ uint16_t      ROW_PIN[8]  = {ROW0_Pin,ROW1_Pin,ROW2_Pin,ROW3_Pin
 
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
-uint8_t matrix_buffer[8] = {0x66, 0x66, 0x7E, 0x7E, 0x66, 0x66, 0x3C, 0x18};
+uint8_t matrix_buffer[8] = {0x18, 0x3C, 0x66, 0x66, 0x7E, 0x7E, 0x66, 0x66};
 
 void rotateLeftMatrix() {
     for (int i = 0; i < MAX_LED_MATRIX; i++) {
-        uint8_t lsb = matrix_buffer[i] & 0x01;   // lấy bit thấp nhất
-        matrix_buffer[i] >>= 1;                  // dịch phải
-        matrix_buffer[i] |= (lsb << 7);          // đưa bit thấp nhất lên MSB
+        uint8_t lsb = matrix_buffer[i] & 0x01;
+        matrix_buffer[i] >>= 1;
+        matrix_buffer[i] |= (lsb << 7);
     }
 }
 
