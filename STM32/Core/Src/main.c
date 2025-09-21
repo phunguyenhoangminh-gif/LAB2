@@ -79,7 +79,15 @@ uint16_t      ROW_PIN[8]  = {ROW0_Pin,ROW1_Pin,ROW2_Pin,ROW3_Pin
 
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
-const uint8_t matrix_buffer[8] = {0x66, 0x66, 0x7E, 0x7E, 0x66, 0x66, 0x3C, 0x18};
+uint8_t matrix_buffer[8] = {0x66, 0x66, 0x7E, 0x7E, 0x66, 0x66, 0x3C, 0x18};
+
+void rotateLeftMatrix() {
+    for (int i = 0; i < MAX_LED_MATRIX; i++) {
+        uint8_t lsb = matrix_buffer[i] & 0x01;   // lấy bit thấp nhất
+        matrix_buffer[i] >>= 1;                  // dịch phải
+        matrix_buffer[i] |= (lsb << 7);          // đưa bit thấp nhất lên MSB
+    }
+}
 
 void clearAllColumns(){
 	for (int i = 0; i < MAX_LED_MATRIX; i++) {
@@ -229,7 +237,8 @@ int main(void)
   setTimer1(100); // DOT
   setTimer2(100); // UPDATE CLOCK
   setTimer3(25);  // UPDATE 7SEG
-  setTimer4(10);  // UPDATE MATRIX
+  setTimer4(5);  // UPDATE MATRIX
+  setTimer5(100);
   while (1)
   {
 	  // LED Blinky
@@ -272,12 +281,17 @@ int main(void)
 
 	  // Update MATRIX
 	  if (timer4_flag == 1) {
-		  setTimer4(10);
+		  setTimer4(5);
 		  updateLEDMatrix(index_led_matrix);
 		  index_led_matrix++;
 		  if (index_led_matrix >= MAX_LED_MATRIX) {
 			  index_led_matrix = 0;
 		  }
+	  }
+
+	  if (timer5_flag == 1) {
+		  setTimer5(100);
+		  rotateLeftMatrix();
 	  }
 
     /* USER CODE END WHILE */
