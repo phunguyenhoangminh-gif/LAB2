@@ -99,6 +99,11 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   hour = 15; minute = 8; second = 50;
+  updateClockBuffer();
+  HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, SET);
+  HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, SET);
+  HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, SET);
+  HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, SET);
 
   setTimer0(100); // LED Blinky
   setTimer1(100); // DOT
