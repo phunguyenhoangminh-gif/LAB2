@@ -58,11 +58,19 @@ void updateClockBuffer(void);
 /* USER CODE BEGIN 0 */
 int timer0_counter = 0;
 int timer0_flag = 0;
+int timer01_counter = 0;
+int timer01_flag = 0;
 int TIMER_CYCLE = 10;
-void setTimer0(int duration) {
+void setTimer0 (int duration) {
     timer0_counter = duration / TIMER_CYCLE;
     timer0_flag = 0;
 }
+
+void setTimer01 (int duration) {
+    timer01_counter = duration / TIMER_CYCLE;
+    timer01_flag = 0;
+}
+
 void timer_run(void) {
     if (timer0_counter > 0) {
         timer0_counter--;
@@ -70,6 +78,12 @@ void timer_run(void) {
             timer0_flag = 1;
         }
     }
+    if (timer01_counter > 0) {
+		timer01_counter--;
+		if (timer01_counter == 0) {
+			timer01_flag = 1;
+		}
+	}
 }
 
 const int MAX_LED = 4;
@@ -114,11 +128,16 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, SET);
+  HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, SET);
+  HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, SET);
+  HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, SET);
   hour = 15;
   minute = 8;
   second = 50;
-
+  updateClockBuffer();
   setTimer0(1000);
+  setTimer01(1000);
   while (1)
   {
 	  if (timer0_flag == 1) {
@@ -126,19 +145,22 @@ int main(void)
 		  setTimer0(2000);
 	  }
 
-	  second++;
-	  if (second >= 60) {
-		  second = 0;
-	      minute++;
+	  if (timer01_flag == 1) {
+		  setTimer01(1000);
+		  second++;
+		  if (second >= 60) {
+			  second = 0;
+			  minute++;
+		  }
+		  if (minute >= 60) {
+			  minute = 0;
+			  hour++;
+		  }
+		  if (hour >= 24) {
+			  hour = 0;
+		  }
+		  updateClockBuffer();
 	  }
-	  if (minute >= 60) {
-	      minute = 0;
-	      hour++;
-	  }
-	  if (hour >= 24) {
-	      hour = 0;
-	  }
-	  updateClockBuffer();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
