@@ -66,7 +66,24 @@ int hour = 0, minute = 0, second = 0;
 
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
-uint8_t matrix_buffer[8] = {0x18, 0x24, 0x42, 0x42, 0x7E, 0x42, 0x42, 0x00};
+const uint8_t matrix_buffer[8] = {0x18, 0x3C, 0x66, 0x66, 0x7E, 0x7E, 0x66, 0x66};
+// PORT/PIN for Columns
+GPIO_TypeDef* COL_PORT[8] = {ENM0_GPIO_Port,ENM1_GPIO_Port,ENM2_GPIO_Port,ENM3_GPIO_Port
+							,ENM4_GPIO_Port,ENM5_GPIO_Port,ENM6_GPIO_Port,ENM7_GPIO_Port};
+uint16_t      COL_PIN[8]  = {ENM0_Pin,ENM1_Pin,ENM2_Pin,ENM3_Pin
+							,ENM4_Pin,ENM5_Pin,ENM6_Pin,ENM7_Pin};
+
+// PORT/PIN for Rows
+GPIO_TypeDef* ROW_PORT[8] = {ROW0_GPIO_Port,ROW1_GPIO_Port,ROW2_GPIO_Port,ROW3_GPIO_Port
+							,ROW4_GPIO_Port,ROW5_GPIO_Port,ROW6_GPIO_Port,ROW7_GPIO_Port};
+uint16_t      ROW_PIN[8]  = {ROW0_Pin,ROW1_Pin,ROW2_Pin,ROW3_Pin
+							,ROW4_Pin,ROW5_Pin,ROW6_Pin,ROW7_Pin};
+void clear_Col_gate(){
+	for (int i = 0; i < MAX_LED_MATRIX; i++){
+		HAL_GPIO_WritePin(COL_PORT[i], COL_PIN[i], RESET);
+	}
+	return;
+}
 /* USER CODE END 0 */
 
 /**
@@ -437,37 +454,114 @@ void updateClockBuffer() {
 }
 
 void updateLEDMatrix(int index){
-    // Tắt hết cột trước
-    HAL_GPIO_WritePin(ENM0_GPIO_Port, ENM0_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(ENM1_GPIO_Port, ENM1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(ENM2_GPIO_Port, ENM2_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(ENM3_GPIO_Port, ENM3_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(ENM4_GPIO_Port, ENM4_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(ENM5_GPIO_Port, ENM5_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(ENM6_GPIO_Port, ENM6_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(ENM7_GPIO_Port, ENM7_Pin, GPIO_PIN_SET);
-
-    // Xuất dữ liệu hàng cho cột hiện tại
-    uint8_t row_data = matrix_buffer[index];
-    for (int i = 0; i < 8; i++) {
-        if (row_data & (1 << i)) {
-            HAL_GPIO_WritePin(ROW0_GPIO_Port + i, ROW0_Pin << i, GPIO_PIN_SET);
-        } else {
-            HAL_GPIO_WritePin(ROW0_GPIO_Port + i, ROW0_Pin << i, GPIO_PIN_RESET);
-        }
-    }
-
-    // Bật cột tương ứng (active low)
-    switch(index){
-        case 0: HAL_GPIO_WritePin(ENM0_GPIO_Port, ENM0_Pin, GPIO_PIN_RESET); break;
-        case 1: HAL_GPIO_WritePin(ENM1_GPIO_Port, ENM1_Pin, GPIO_PIN_RESET); break;
-        case 2: HAL_GPIO_WritePin(ENM2_GPIO_Port, ENM2_Pin, GPIO_PIN_RESET); break;
-        case 3: HAL_GPIO_WritePin(ENM3_GPIO_Port, ENM3_Pin, GPIO_PIN_RESET); break;
-        case 4: HAL_GPIO_WritePin(ENM4_GPIO_Port, ENM4_Pin, GPIO_PIN_RESET); break;
-        case 5: HAL_GPIO_WritePin(ENM5_GPIO_Port, ENM5_Pin, GPIO_PIN_RESET); break;
-        case 6: HAL_GPIO_WritePin(ENM6_GPIO_Port, ENM6_Pin, GPIO_PIN_RESET); break;
-        case 7: HAL_GPIO_WritePin(ENM7_GPIO_Port, ENM7_Pin, GPIO_PIN_RESET); break;
-    }
+	 switch (index){
+	 	 case 0:
+	 		 clear_Col_gate();
+	 		 HAL_GPIO_WritePin(COL_PORT[index], COL_PIN[index], SET);
+	 		 for (int i = 0; i < MAX_LED_MATRIX; i++){
+	 			 if (matrix_buffer[index] & (1<<i)) {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], SET);
+	 			 }
+	 			 else {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], RESET);
+	 			 }
+	 		 }
+	 		 index++;
+		 break;
+		 case 1:
+	 		 clear_Col_gate();
+	 		 HAL_GPIO_WritePin(COL_PORT[index], COL_PIN[index], SET);
+	 		 for (int i = 0; i < MAX_LED_MATRIX; i++){
+	 			 if (matrix_buffer[index] & 1<<i) {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], SET);
+	 			 }
+	 			 else {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], RESET);
+	 			 }
+	 		 }
+	 		 index++;
+		 break;
+		 case 2:
+	 		 clear_Col_gate();
+	 		 HAL_GPIO_WritePin(COL_PORT[index], COL_PIN[index], SET);
+	 		 for (int i = 0; i < MAX_LED_MATRIX; i++){
+	 			 if (matrix_buffer[index] & 1<<i) {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], SET);
+	 			 }
+	 			 else {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], RESET);
+	 			 }
+	 		 }
+	 		 index++;
+		 break;
+		 case 3:
+	 		 clear_Col_gate();
+	 		 HAL_GPIO_WritePin(COL_PORT[index], COL_PIN[index], SET);
+	 		 for (int i = 0; i < MAX_LED_MATRIX; i++){
+	 			 if (matrix_buffer[index] & 1<<i) {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], SET);
+	 			 }
+	 			 else {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], RESET);
+	 			 }
+	 		 }
+	 		 index++;
+		 break;
+		 case 4:
+	 		 clear_Col_gate();
+	 		 HAL_GPIO_WritePin(COL_PORT[index], COL_PIN[index], SET);
+	 		 for (int i = 0; i < MAX_LED_MATRIX; i++){
+	 			 if (matrix_buffer[index] & 1<<i) {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], SET);
+	 			 }
+	 			 else {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], RESET);
+	 			 }
+	 		 }
+	 		 index++;
+		 break;
+		 case 5:
+	 		 clear_Col_gate();
+	 		 HAL_GPIO_WritePin(COL_PORT[index], COL_PIN[index], SET);
+	 		 for (int i = 0; i < MAX_LED_MATRIX; i++){
+	 			 if (matrix_buffer[index] & 1<<i) {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], SET);
+	 			 }
+	 			 else {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], RESET);
+	 			 }
+	 		 }
+	 		 index++;
+		 break;
+		 case 6:
+	 		 clear_Col_gate();
+	 		 HAL_GPIO_WritePin(COL_PORT[index], COL_PIN[index], SET);
+	 		 for (int i = 0; i < MAX_LED_MATRIX; i++){
+	 			 if (matrix_buffer[index] & 1<<i) {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], SET);
+	 			 }
+	 			 else {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], RESET);
+	 			 }
+	 		 }
+	 		 index++;
+		 break;
+		 case 7:
+	 		 clear_Col_gate();
+	 		 HAL_GPIO_WritePin(COL_PORT[index], COL_PIN[index], SET);
+	 		 for (int i = 0; i < MAX_LED_MATRIX; i++){
+	 			 if (matrix_buffer[index] & 1<<i) {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], SET);
+	 			 }
+	 			 else {
+			 		 HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], RESET);
+	 			 }
+	 		 }
+	 		 index = 0;
+		 break;
+		 default:
+		 break;
+	}
 }
 
 
