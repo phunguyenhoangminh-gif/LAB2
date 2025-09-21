@@ -80,7 +80,7 @@ Disassembly of section .text:
 
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
-const uint8_t matrix_buffer[8] = {0x66, 0x66, 0x7E, 0x7E, 0x66, 0x66, 0x3C, 0x18};
+const uint8_t matrix_buffer[8] = {0x18, 0x3C, 0x66, 0x66, 0x7E, 0x7E, 0x66, 0x66};
 
 void clearAllColumns(){
  800014c:	b580      	push	{r7, lr}
@@ -156,7 +156,7 @@ void updateLEDMatrix(int index) {
  80001de:	627b      	str	r3, [r7, #36]	; 0x24
  80001e0:	e024      	b.n	800022c <updateLEDMatrix+0x9c>
                 if (matrix_buffer[0] & (1 << i)) {
- 80001e2:	2366      	movs	r3, #102	; 0x66
+ 80001e2:	2318      	movs	r3, #24
  80001e4:	461a      	mov	r2, r3
  80001e6:	6a7b      	ldr	r3, [r7, #36]	; 0x24
  80001e8:	fa42 f303 	asr.w	r3, r2, r3
@@ -213,7 +213,7 @@ void updateLEDMatrix(int index) {
  800024c:	623b      	str	r3, [r7, #32]
  800024e:	e024      	b.n	800029a <updateLEDMatrix+0x10a>
                 if (matrix_buffer[1] & (1 << i)) {
- 8000250:	2366      	movs	r3, #102	; 0x66
+ 8000250:	233c      	movs	r3, #60	; 0x3c
  8000252:	461a      	mov	r2, r3
  8000254:	6a3b      	ldr	r3, [r7, #32]
  8000256:	fa42 f303 	asr.w	r3, r2, r3
@@ -270,7 +270,7 @@ void updateLEDMatrix(int index) {
  80002ba:	61fb      	str	r3, [r7, #28]
  80002bc:	e024      	b.n	8000308 <updateLEDMatrix+0x178>
                 if (matrix_buffer[2] & (1 << i)) {
- 80002be:	237e      	movs	r3, #126	; 0x7e
+ 80002be:	2366      	movs	r3, #102	; 0x66
  80002c0:	461a      	mov	r2, r3
  80002c2:	69fb      	ldr	r3, [r7, #28]
  80002c4:	fa42 f303 	asr.w	r3, r2, r3
@@ -327,7 +327,7 @@ void updateLEDMatrix(int index) {
  8000328:	61bb      	str	r3, [r7, #24]
  800032a:	e024      	b.n	8000376 <updateLEDMatrix+0x1e6>
                 if (matrix_buffer[3] & (1 << i)) {
- 800032c:	237e      	movs	r3, #126	; 0x7e
+ 800032c:	2366      	movs	r3, #102	; 0x66
  800032e:	461a      	mov	r2, r3
  8000330:	69bb      	ldr	r3, [r7, #24]
  8000332:	fa42 f303 	asr.w	r3, r2, r3
@@ -384,7 +384,7 @@ void updateLEDMatrix(int index) {
  8000396:	617b      	str	r3, [r7, #20]
  8000398:	e024      	b.n	80003e4 <updateLEDMatrix+0x254>
                 if (matrix_buffer[4] & (1 << i)) {
- 800039a:	2366      	movs	r3, #102	; 0x66
+ 800039a:	237e      	movs	r3, #126	; 0x7e
  800039c:	461a      	mov	r2, r3
  800039e:	697b      	ldr	r3, [r7, #20]
  80003a0:	fa42 f303 	asr.w	r3, r2, r3
@@ -441,7 +441,7 @@ void updateLEDMatrix(int index) {
  8000404:	613b      	str	r3, [r7, #16]
  8000406:	e024      	b.n	8000452 <updateLEDMatrix+0x2c2>
                 if (matrix_buffer[5] & (1 << i)) {
- 8000408:	2366      	movs	r3, #102	; 0x66
+ 8000408:	237e      	movs	r3, #126	; 0x7e
  800040a:	461a      	mov	r2, r3
  800040c:	693b      	ldr	r3, [r7, #16]
  800040e:	fa42 f303 	asr.w	r3, r2, r3
@@ -498,7 +498,7 @@ void updateLEDMatrix(int index) {
  8000472:	60fb      	str	r3, [r7, #12]
  8000474:	e02d      	b.n	80004d2 <updateLEDMatrix+0x342>
                 if (matrix_buffer[6] & (1 << i)) {
- 8000476:	233c      	movs	r3, #60	; 0x3c
+ 8000476:	2366      	movs	r3, #102	; 0x66
  8000478:	461a      	mov	r2, r3
  800047a:	68fb      	ldr	r3, [r7, #12]
  800047c:	fa42 f303 	asr.w	r3, r2, r3
@@ -560,7 +560,7 @@ void updateLEDMatrix(int index) {
  80004f2:	60bb      	str	r3, [r7, #8]
  80004f4:	e024      	b.n	8000540 <updateLEDMatrix+0x3b0>
                 if (matrix_buffer[7] & (1 << i)) {
- 80004f6:	2318      	movs	r3, #24
+ 80004f6:	2366      	movs	r3, #102	; 0x66
  80004f8:	461a      	mov	r2, r3
  80004fa:	68bb      	ldr	r3, [r7, #8]
  80004fc:	fa42 f303 	asr.w	r3, r2, r3
