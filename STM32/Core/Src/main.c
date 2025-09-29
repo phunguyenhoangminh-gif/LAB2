@@ -233,29 +233,29 @@ int main(void)
   HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, SET);
   HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, SET);
 
-  setTimer0(100); // LED Blinky
-  setTimer1(100); // DOT
-  setTimer2(100); // UPDATE CLOCK
-  setTimer3(25);  // UPDATE 7SEG
-  setTimer4(5);  // UPDATE MATRIX
-  setTimer5(100);
+  setTimer (0, 100); // LED Blinky
+  setTimer (1, 100); // DOT
+  setTimer (2, 100); // UPDATE CLOCK
+  setTimer (3, 25);  // UPDATE 7SEG
+  setTimer (4, 5);  // UPDATE MATRIX
+  setTimer (5, 100); //MATRIX ANIMATION
   while (1)
   {
 	  // LED Blinky
-	  if (timer0_flag == 1) {
-		  setTimer0(100);
+	  if (isTimerExpired(0)) {
+		  setTimer (0, 100);
 		  HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
 	  }
 
 	  // DOT
-	  if (timer1_flag == 1) {
-		  setTimer1(100);
+	  if (isTimerExpired(1)) {
+		  setTimer (1, 100);
 		  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
 	  }
 
 	  // Update Clock
-	  if (timer2_flag == 1) {
-		  setTimer2(100);
+	  if (isTimerExpired(2)) {
+		  setTimer (2, 100);
 		  second++;
 		  if (second >= 60) {
 			  second = 0;
@@ -272,16 +272,16 @@ int main(void)
 	  }
 
 	  // Update 7SEG
-	  if (timer3_flag == 1) {
-		  setTimer3(25);
+	  if (isTimerExpired(3)) {
+		  setTimer (3, 25);
 		  update7SEG(index_led);
 		  index_led++;
 		  if (index_led >= MAX_LED) index_led = 0;
 	  }
 
 	  // Update MATRIX
-	  if (timer4_flag == 1) {
-		  setTimer4(5);
+	  if (isTimerExpired(4)) {
+		  setTimer (4, 5);
 		  updateLEDMatrix(index_led_matrix);
 		  index_led_matrix++;
 		  if (index_led_matrix >= MAX_LED_MATRIX) {
@@ -289,8 +289,8 @@ int main(void)
 		  }
 	  }
 
-	  if (timer5_flag == 1) {
-		  setTimer5(100);
+	  if (isTimerExpired(5)) {
+		  setTimer (5, 100);
 		  rotateLeftMatrix();
 	  }
 
