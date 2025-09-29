@@ -105,22 +105,22 @@ int main(void)
   HAL_GPIO_WritePin(EN2_GPIO_Port, EN2_Pin, SET);
   HAL_GPIO_WritePin(EN3_GPIO_Port, EN3_Pin, SET);
 
-  setTimer0(100); // LED Blinky
-  setTimer1(100); // DOT
-  setTimer2(100); // UPDATE TIME
+  setTimer (0, 100); // LED Blinky
+  setTimer (1, 100); // DOT
+  setTimer (2, 100); // UPDATE TIME
   while (1)
   {
-	  if (timer0_flag == 1) {
+	  if (isTimerExpired(0)) {
 		  HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-		  setTimer0(100);
+		  setTimer (0, 100);
 	  }
 
-	  if (timer1_flag == 1) {
+	  if (isTimerExpired(1)) {
 		  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-		  setTimer1(100);
+		  setTimer (1, 100);
 	  }
 
-	  if (timer2_flag == 1) {
+	  if (isTimerExpired(2)) {
 		  second++;
 		  if (second >= 60) {
 			  second = 0;
@@ -134,7 +134,7 @@ int main(void)
 			  hour = 0;
 		  }
 		  updateClockBuffer();
-		  setTimer2(100);
+		  setTimer (2, 100);
 	  }
     /* USER CODE END WHILE */
 
