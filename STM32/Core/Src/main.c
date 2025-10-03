@@ -99,7 +99,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  hour = 15; minute = 8; second = 50;
+  hour = 23; minute = 59; second = 55;
   updateClockBuffer();
   HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, SET);
   HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, SET);
