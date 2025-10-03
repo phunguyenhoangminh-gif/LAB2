@@ -779,12 +779,12 @@ int main(void)
  8000660:	2119      	movs	r1, #25
  8000662:	2003      	movs	r0, #3
  8000664:	f000 fbb4 	bl	8000dd0 <setTimer>
-  setTimer (4, 5);  // UPDATE MATRIX
- 8000668:	2105      	movs	r1, #5
+  setTimer (4, 1);  // UPDATE MATRIX
+ 8000668:	2101      	movs	r1, #1
  800066a:	2004      	movs	r0, #4
  800066c:	f000 fbb0 	bl	8000dd0 <setTimer>
-  setTimer (5, 100); //MATRIX ANIMATION
- 8000670:	2164      	movs	r1, #100	; 0x64
+  setTimer (5, 25); //MATRIX ANIMATION
+ 8000670:	2119      	movs	r1, #25
  8000672:	2005      	movs	r0, #5
  8000674:	f000 fbac 	bl	8000dd0 <setTimer>
   while (1)
@@ -926,8 +926,8 @@ int main(void)
  800074e:	4603      	mov	r3, r0
  8000750:	2b00      	cmp	r3, #0
  8000752:	d015      	beq.n	8000780 <main+0x194>
-		  setTimer (4, 5);
- 8000754:	2105      	movs	r1, #5
+		  setTimer (4, 1);
+ 8000754:	2101      	movs	r1, #1
  8000756:	2004      	movs	r0, #4
  8000758:	f000 fb3a 	bl	8000dd0 <setTimer>
 		  updateLEDMatrix(index_led_matrix);
@@ -960,8 +960,8 @@ int main(void)
  8000786:	4603      	mov	r3, r0
  8000788:	2b00      	cmp	r3, #0
  800078a:	f43f af75 	beq.w	8000678 <main+0x8c>
-		  setTimer (5, 100);
- 800078e:	2164      	movs	r1, #100	; 0x64
+		  setTimer (5, 25);
+ 800078e:	2119      	movs	r1, #25
  8000790:	2005      	movs	r0, #5
  8000792:	f000 fb1d 	bl	8000dd0 <setTimer>
 		  rotateLeftMatrix();

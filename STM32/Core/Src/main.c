@@ -237,8 +237,8 @@ int main(void)
   setTimer (1, 100); // DOT
   setTimer (2, 100); // UPDATE CLOCK
   setTimer (3, 25);  // UPDATE 7SEG
-  setTimer (4, 5);  // UPDATE MATRIX
-  setTimer (5, 100); //MATRIX ANIMATION
+  setTimer (4, 1);  // UPDATE MATRIX
+  setTimer (5, 25); //MATRIX ANIMATION
   while (1)
   {
 	  // LED Blinky
@@ -281,7 +281,7 @@ int main(void)
 
 	  // Update MATRIX
 	  if (isTimerExpired(4)) {
-		  setTimer (4, 5);
+		  setTimer (4, 1);
 		  updateLEDMatrix(index_led_matrix);
 		  index_led_matrix++;
 		  if (index_led_matrix >= MAX_LED_MATRIX) {
@@ -290,7 +290,7 @@ int main(void)
 	  }
 
 	  if (isTimerExpired(5)) {
-		  setTimer (5, 100);
+		  setTimer (5, 25);
 		  rotateLeftMatrix();
 	  }
 
