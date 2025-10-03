@@ -704,8 +704,8 @@ int main(void)
  80005d8:	2119      	movs	r1, #25
  80005da:	2003      	movs	r0, #3
  80005dc:	f000 fba4 	bl	8000d28 <setTimer>
-  setTimer (4, 10);  // UPDATE MATRIX
- 80005e0:	210a      	movs	r1, #10
+  setTimer (4, 1);  // UPDATE MATRIX
+ 80005e0:	2101      	movs	r1, #1
  80005e2:	2004      	movs	r0, #4
  80005e4:	f000 fba0 	bl	8000d28 <setTimer>
   while (1)
@@ -847,8 +847,8 @@ int main(void)
  80006be:	4603      	mov	r3, r0
  80006c0:	2b00      	cmp	r3, #0
  80006c2:	d091      	beq.n	80005e8 <main+0x84>
-		  setTimer (4, 10);
- 80006c4:	210a      	movs	r1, #10
+		  setTimer (4, 1);
+ 80006c4:	2101      	movs	r1, #1
  80006c6:	2004      	movs	r0, #4
  80006c8:	f000 fb2e 	bl	8000d28 <setTimer>
 		  updateLEDMatrix(index_led_matrix);

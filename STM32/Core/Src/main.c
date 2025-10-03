@@ -229,7 +229,7 @@ int main(void)
   setTimer (1, 100); // DOT
   setTimer (2, 100); // UPDATE CLOCK
   setTimer (3, 25);  // UPDATE 7SEG
-  setTimer (4, 10);  // UPDATE MATRIX
+  setTimer (4, 1);  // UPDATE MATRIX
   while (1)
   {
 	  // LED Blinky
@@ -272,7 +272,7 @@ int main(void)
 
 	  // Update MATRIX
 	  if (isTimerExpired(4)) {
-		  setTimer (4, 10);
+		  setTimer (4, 1);
 		  updateLEDMatrix(index_led_matrix);
 		  index_led_matrix++;
 		  if (index_led_matrix >= MAX_LED_MATRIX) {
